@@ -1,3 +1,5 @@
+<img align="right" src="https://github.com/nanoflakes/.github/raw/master/profile/LOGO.png" height="200" width="200" alt="Nanoflakes Logo">
+
 # Nanoflakes › .github
 
 ## Looking for the specification?
