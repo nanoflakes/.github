@@ -1,28 +1,44 @@
 # Nanoflakes
 
-Specification of unique ID numbers generated locally or from workers, based on Twitter Snowflakes.
+"Nanoflakes" is a specification for unique identifiers which can be
+generated locally or from a remote server.  The specification is
+designed to be simple and easy to implement, and to be compatible with
+Twitter's Snowflake algorithm, which Nanoflakes is based on.
 
-This specification is licensed under [CC0](https://github.com/nanoflakes/nanoflakes/blob/master/LICENSE).
+## What's a Nanoflake?
 
-## A Nanoflake
+A nanoflake is a 64-bit signed integer, and supports 1024 unique
+ID generators, each being able to generate 4096 (2^12) unique IDs
+per millisecond, and with 41-bit timestamps.
 
-A nanoflake is a 64-bit signed integer, which contains the following information:
+The main and only difference between a nanoflake and a Twitter Snowflake
+is that nanoflakes merges Twitter's 5-bit `datacenter` ID and 5-bit `worker`
+ID into a single 10-bit `generator` ID.
 
-- 41 bits for `time`
-   - The ID creation time, in milliseconds, with a custom epoch. (up to 69 years)
-- 10 bits for `generator`
-   - Supports up to 1024 standalone ID generators
-- 12 bits for `sequence`
-   - A generator can generate up to 4096 IDs per millisecond.
+Additionally, the specification suggests encoding nanoflakes using base-36,
+in order to fit the largest possible nanoflake into a 13-character string.
 
-The only difference between Twitter Snowflakes and a Nanoflakes, in fact, is Twitter splitting `generator` in `datacenter` (5 bits) and `worker` (5 bits), while Nanoflakes treat the entire 10 bits as a single `generator` ID.
+The official, full specification can be found [here](https://github.com/nanoflakes/spec).
 
-### Encoding
+## Implementations
 
-This specification suggests encoding nanoflakes as a string, since [some languages doesn't support 64-bit integers](https://tqdev.com/2016-javascript-cannot-handle-64-bit-integers).
+Nanoflakes have reference implementations in the following languages:
 
-The recommended encoding as either as a decimal number, as a hexadecimal number, or using [Base36](https://en.wikipedia.org/wiki/Base36) to encoding (which fit the largest 64-bit unsigned in 13 characters!)
+* [Java](https://github.com/nanoflakes/nanoflakes-java)
+* [Kotlin](https://github.com/nanoflakes/nanoflakes-kotlin)
+* [TypeScript](https://github.com/nanoflakes/nanoflakes-js)
 
-## Nanoflake generation
+You're more than welcome to implement nanoflakes in other languages!
+If you do, please open a pull request to add your implementation to this
+list.
 
-Nanoflakes can be generated locally and retrieved by simple function calls, or be generated remotely, and retrieved via any inter-process comunication method.
+## License
+
+The official Nanoflakes specification is licensed under the [CCO 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) license.
+
+The reference implementations are licensed under the [MIT License](https://opensource.org/licenses/MIT).
+
+## Contributing
+
+Contributions are welcome!  Please open an issue or pull request to
+suggest changes to the specification or to add a new implementation.
